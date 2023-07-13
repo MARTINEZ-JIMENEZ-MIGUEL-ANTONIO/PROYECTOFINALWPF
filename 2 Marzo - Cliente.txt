@@ -1,0 +1,59 @@
+using System;
+namespace Hoy
+{ 
+    class program
+    {
+        static void Main(string[] args)
+        {
+            string nombre;
+            char opcion;
+            Queue<string> cola = new Queue<string>();
+            Console.WriteLine("Bienvenidos");
+            do
+            {
+                Console.Write("{0} Nombre del cliente: ");
+                nombre = Console.ReadLine();
+                cola.Enqueue(nombre);
+                Console.WriteLine("Desea Continuar agregando personas s/n");
+                opcion = char.Parse(Console.ReadLine().ToUpper());
+            }
+            while(opcion != 'n' && opcion != 'N');
+            Console.WriteLine("La Cola Es: ");
+
+            int cont = 0;
+            foreach (string n in cola)
+            {
+                Console.WriteLine("{0}.{1}", (cont+1), n);
+                cont++;
+            }
+            Console.WriteLine("Hay {0} personas en la cola ", cola.Count);
+            
+            for(int i = 0; i < cola.Count; i++)
+            {
+                Console.WriteLine("--------------------------");
+                if (i == cont - 1)
+                {
+                    Console.WriteLine("El Cliente {0} Es Atendido ", cola.Peek());
+                    Console.WriteLine("--------------------------");
+                    Console.WriteLine("El Cliente {0} Fue Atendido y Salio Sel Supermercado", cola.Dequeue());
+                    Console.WriteLine("--------------------------");
+                    Console.WriteLine("La Cola Ya No Presenta Mas Clientes");
+                }
+                else
+                {
+                    Console.WriteLine("El Cliente {0} Es Atendido ", cola.Peek());
+                    Console.WriteLine("--------------------------");
+                    Console.WriteLine("El Cliente {0} Fue Atendido y Salio Sel Supermercado", cola.Dequeue());
+                    Console.WriteLine("--------------------------");
+                    Console.WriteLine("La Cola Es: ");
+                }
+                int cont1 = 1;
+                foreach (string n in cola)
+                {
+                    Console.WriteLine("{0}.{1}", cont, n);
+                    cont++;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,304 @@
+using System;
+using System.Numerics;
+
+namespace ELECTRODOMESTICOS
+{
+    // ELECTRODOMESTICO
+
+    public class Electrodomestico
+    {
+        // CONSTANTES << Se usara como base / referencia en todo el codigo
+        // Nombres con MINUSCULA
+        protected const string colorDEF = "Blanco";
+        protected const char   consumoenergeticoDEF = 'F';
+        protected const double preciobaseDEF = 100;
+        protected const double pesobaseDEF = 5;
+
+        // ATRIBUTOS << Los ATRIBUTOS del ELECTRODOMESTICO
+        protected char   ConsumoEnergetico;
+        protected string Color;
+        protected double PrecioBase;
+        protected double Peso;
+
+        // METODOS PRIVADOS << Se COMPRUEBA la ELECCION
+        private void ComprobarColor (string Color)
+        {
+            string[]Colores = { "Blanco", "Negro", "Gris", "Rojo", "Azul" };
+            bool Encontrado = false;
+
+            for (int i = 0; i < Colores.Length && !Encontrado; i++)
+            {
+                if (Colores[i].Equals (Color))
+                {
+                    Encontrado = true;
+                }
+            }
+            if (Encontrado) 
+            {
+                this.Color = Color;
+            }
+            else
+            {
+                this.Color = colorDEF;
+            }
+        }
+
+        private void ComprobarConsumoEnergetico (char consumoenergeticoDEF)
+        {
+            if (ConsumoEnergetico>=65 && ConsumoEnergetico<=70)
+            {
+                this.ConsumoEnergetico = ConsumoEnergetico;
+            }
+            else
+            {
+                this.ConsumoEnergetico = consumoenergeticoDEF;
+            }
+        }
+
+        // METODOS PUBLICOS >> Se mandan a LLAMAR
+        public string GetColor()
+        {
+            return Color;
+        }
+
+        public char GetConsumoEnergetico()
+        {
+            return ConsumoEnergetico;
+        }
+
+        public double GetPrecioBase()
+        {
+            return PrecioBase;
+        }
+
+        public double GetPeso()
+        {
+            return Peso;
+        }
+
+        // Precio Final del ELECTRODOMESTICO * SELECCION
+        public double PrecioFinal()
+        {
+            double Plus = 0;
+
+            switch (ConsumoEnergetico) 
+            {
+                case 'A':
+                    {
+                        Plus += 100;
+                    }
+                    break;
+
+                case 'B':
+                    {
+                        Plus += 100;
+                    }
+                    break;
+
+                case 'C':
+                    {
+                        Plus += 100;
+                    }
+                    break;
+
+                case 'D':
+                    {
+                        Plus += 100;
+                    }
+                    break;
+
+                case 'E':
+                    {
+                        Plus += 100;
+                    }
+                    break;
+
+                case 'F':
+                    {
+                        Plus += 100;
+                    }
+                    break;
+            }
+
+            if (Peso >= 0 && Peso < 19)
+            {
+                Plus += 10;
+            }
+            else if(Peso >= 20 && Peso < 49)
+            {
+                Plus += 50;
+            }
+            else if(Peso >= 50 && Peso < 79)
+            {
+                Plus += 80;
+            }
+            else if (Peso >= 80)
+            {
+                Plus += 100;
+            }
+
+            return PrecioBase + Plus;
+        }
+        
+        public Electrodomestico ()
+        {
+            this.PrecioBase = preciobaseDEF;
+            this.Peso = pesobaseDEF;
+            this.ConsumoEnergetico = consumoenergeticoDEF;
+            this.Color = colorDEF;
+        }
+
+        public Electrodomestico (double PrecioBase, double Peso)
+        {
+            this.PrecioBase = preciobaseDEF;
+            this.Peso = pesobaseDEF;
+            this.ConsumoEnergetico = consumoenergeticoDEF;
+            this.Color = colorDEF;
+        }
+
+        public Electrodomestico (double PrecioBase, double Peso, char ConsumoEnergetico, string Color)
+        {
+            this.PrecioBase = PrecioBase;
+            this.Peso = Peso;
+
+            ComprobarConsumoEnergetico(ConsumoEnergetico);
+            ComprobarColor(Color);
+        }
+
+    }
+
+    // LAVADORA
+
+    public class Lavadora : Electrodomestico
+    {
+        // CONSTANTES
+        private const int cargaDEF = 5;
+
+        // ATRIBUTOS
+        public int Carga;
+
+        // METODOS PUBLICOS
+        public int GetCarga()
+        {
+            return Carga;
+        }
+
+        public double PrecioFinal()
+        {
+            double Plus = base.PrecioFinal();
+
+            if (Carga > 30)
+            {
+                Plus += 50;
+            }
+            return Plus;
+        }
+
+        // CONSTRUCTOR
+        public Lavadora() : this(preciobaseDEF, pesobaseDEF, consumoenergeticoDEF, colorDEF, cargaDEF)
+        {
+
+        }
+        public Lavadora (double PrecioBase, double Peso) : this(PrecioBase, Peso, consumoenergeticoDEF, colorDEF, cargaDEF)
+        {
+
+        }
+
+        public Lavadora (double PrecioBase, double Peso, char ConsumoEnergetico, string Color, int Carga) : base (PrecioBase, Peso, ConsumoEnergetico, Color)
+        {
+            this.Carga = Carga;
+        }
+
+    }
+
+    // TELEVISION
+
+    public class Television : Electrodomestico 
+    {
+        // CONSTANTES
+        private const int resolucionDEF = 20;
+
+        // ATRIBUTOS
+        private int  Resolucion;
+        private bool SintonizadorTDT;
+
+        // METODOS PUBLICOS
+        public double PrecioFinal()
+        {
+            double Plus = base.PrecioFinal();
+
+            if (Resolucion > 40)
+            {
+                Plus += PrecioBase * 0.3;
+            }
+            if (SintonizadorTDT)
+            {
+                Plus += 50;
+            }
+            return Plus;
+        }
+
+        // CONSTRUCTOR
+        public Television() : this(preciobaseDEF, pesobaseDEF, consumoenergeticoDEF, colorDEF, resolucionDEF, false)
+        {
+
+        }
+
+        public Television (double PrecioBase, double Peso) : this(PrecioBase, Peso, consumoenergeticoDEF, colorDEF, resolucionDEF, false)
+        {
+
+        }
+
+        public Television (double PrecioBase, double Peso, char ConsumoEnergetico, string Color, int Resolucion, bool SintonizadorTDT) : base (PrecioBase, Peso, ConsumoEnergetico, Color)
+        {
+            this.Resolucion = Resolucion;
+            this.SintonizadorTDT = SintonizadorTDT;
+        }
+    }
+
+   class ElectrodomesticoAPP
+    {
+        static void Main(string[] args)
+        {
+            Electrodomestico[] ListaElectrodomestica = new Electrodomestico[10];
+            {
+                ListaElectrodomestica[0] = new Electrodomestico (200, 60, 'C', "Verde");
+                ListaElectrodomestica[1] = new Lavadora (150, 30);
+                ListaElectrodomestica[2] = new Television (500, 80, 'E', "Negro", 42, false);
+                ListaElectrodomestica[3] = new Electrodomestico (600, 20, 'D', "Gris");
+                ListaElectrodomestica[4] = new Lavadora (300, 40, 'Z', "Blanco", 40);
+                ListaElectrodomestica[5] = new Television (250, 70);
+                ListaElectrodomestica[6] = new Electrodomestico (50, 10);
+                ListaElectrodomestica[7] = new Lavadora (400, 100, 'A', "Verde", 15);
+                ListaElectrodomestica[8] = new Television (200, 60, 'C', "Naranja", 30, true);
+                ListaElectrodomestica[9] = new Electrodomestico ();
+
+                double SumaElectrodomesticos = 0;
+                double SumaTelevisiones = 0;
+                double SumaLavadoras = 0;
+
+                for (int i = 0; i < ListaElectrodomestica.Length; i++)
+                {
+                    if (ListaElectrodomestica[i] is Electrodomestico)
+                    {
+                        SumaElectrodomesticos += ListaElectrodomestica[i].PrecioFinal();
+                    }
+
+                    if(ListaElectrodomestica[i] is Lavadora)
+                    {
+                        SumaLavadoras += ListaElectrodomestica[i].PrecioFinal();
+                    }
+
+                    if(ListaElectrodomestica[i] is Television)
+                    {
+                        SumaTelevisiones += ListaElectrodomestica[i].PrecioFinal();
+                    }
+                }
+
+                Console.WriteLine("La suma del precio de los electrodomesticos es de " + SumaElectrodomesticos);
+                Console.WriteLine("La suma del precio de las lavadoras es de " + SumaLavadoras);
+                Console.WriteLine("La suma del precio de las televisiones es de " + SumaTelevisiones);
+            }
+        }
+    }
+}

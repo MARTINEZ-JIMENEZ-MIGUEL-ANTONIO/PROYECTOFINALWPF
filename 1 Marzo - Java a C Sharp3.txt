@@ -1,0 +1,75 @@
+Class Password.Cs
+namespace Contra
+{
+    class Password
+    {
+        private int longitud;
+        public string contraseña;
+        public Password(int longitud)
+        {
+            this.longitud = longitud;
+            contraseña = generaPassword();
+            Console.WriteLine("La contraseña generada es: " + contraseña);
+            if (esFuerte() == true)
+            {
+                Console.WriteLine("La contraseña guardada es fuerte");
+            }
+            else
+   
+            {
+                Console.WriteLine("La contraseña generada es debil");
+            }
+        }
+        public string generaPassword()
+        {
+            Random aleatorio= new Random();
+            string password = "";
+            for (int i = 0; i < longitud; i++)
+            {
+                int eleccion = aleatorio.Next(0, 9);
+                password += eleccion.ToString();
+            }
+            return password;
+        }
+        public Boolean esFuerte()
+        {
+            int cuentanumeros = 0;
+            for (int i=0; i<contraseña.Length; i++)
+            {
+                cuentanumeros+=1;
+            }
+            if (cuentanumeros >= 5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}
+
+
+class Program.cs
+using Contra;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Contraseña
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Longitud de la contraseña: ");
+            int a=int.Parse(Console.ReadLine());
+            new Password(a);
+            Console.WriteLine();
+
+        }
+    }
+}

@@ -1,0 +1,119 @@
+using System;
+
+public class Cuenta
+{
+
+    //Atributos
+    private string titular;
+    private double cantidad;
+
+    //Constructores
+    public Cuenta(string titular)
+    {
+        this.titular = titular;
+        this.cantidad = 0;
+    }
+
+    public Cuenta(string titular, double cantidad)
+    {
+        this.titular = titular;
+        //Si la cantidad es menor que cero, lo ponemos a cero
+        if (cantidad < 0)
+        {
+            this.cantidad = 0;
+        }
+        else
+        {
+            this.cantidad = cantidad;
+        }
+    }
+
+    //Metodos
+    public string GetTitular()
+    {
+        return titular;
+    }
+
+    public void SetTitular(string titular)
+    {
+        this.titular = titular;
+    }
+
+    public double GetCantidad()
+    {
+        return cantidad;
+    }
+
+    public void SetCantidad(double cantidad)
+    {
+        this.cantidad = cantidad;
+    }
+
+    /**
+     * Ingresa dinero en la cuenta, 
+     * solo si es positivo la cantidad
+     *
+     * @param cantidad
+     */
+    public void Ingresar(double cantidad)
+    {
+        if (cantidad > 0)
+        {
+            this.cantidad += cantidad;
+        }
+    }
+
+    /**
+     * Retira una cantidad en la cuenta, si se quedara en negativo se quedaria
+     * en cero
+     *
+     * @param cantidad
+     */
+    public void Retirar(double cantidad)
+    {
+        if (this.cantidad - cantidad < 0)
+        {
+            this.cantidad = 0;
+        }
+        else
+        {
+            this.cantidad -= cantidad;
+        }
+    }
+
+    /**
+     * Devuelve el estado del objeto
+     *
+     * @return
+     */
+    public override string ToString()
+    {
+        return "El titular " + titular + " tiene " + cantidad + " euros en la cuenta";
+    }
+
+}
+
+public class CuentaApp
+{
+
+    public static void Main(string[] args)
+    {
+
+        Cuenta cuenta_1 = new Cuenta("DiscoDurodeRoer");
+        Cuenta cuenta_2 = new Cuenta("Fernando", 300);
+
+        //Ingresa dinero en las cuentas
+        cuenta_1.Ingresar(300);
+        cuenta_2.Ingresar(400);
+
+        //Retiramos dinero en las cuentas
+        cuenta_1.Retirar(500);
+        cuenta_2.Retirar(100);
+
+        //Muestro la informacion de las cuentas
+        Console.WriteLine(cuenta_1); // 0 euros
+        Console.WriteLine(cuenta_2); // 600 euros
+
+    }
+
+}

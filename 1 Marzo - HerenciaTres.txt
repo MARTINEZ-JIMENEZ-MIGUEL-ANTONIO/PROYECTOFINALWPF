@@ -1,0 +1,37 @@
+using System;
+
+namespace Herencia3
+{
+    public class A
+    {
+        //Crear Constructor
+        public A()
+        {
+            Console.WriteLine("Constructor De La Clase A");
+        }
+    }
+    public class B: A
+    {
+        public B()
+        {
+            Console.WriteLine("Constructor De La Clase B");
+        }
+    }
+
+    public class C : B
+    {
+        public C()
+        {
+            Console.WriteLine("Constructor De La Clase C");
+        }
+    }
+
+    class Prueba
+    {
+        static void Main(string[] args)
+        {
+            C objetoC = new C();
+            Console.ReadKey();
+        }
+    }
+}
